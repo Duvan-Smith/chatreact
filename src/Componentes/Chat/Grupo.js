@@ -8,11 +8,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import Sesion from './Sesion';
-
-
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -51,9 +46,10 @@ export default function SimpleTable() {
                     {rows.map(row => (
                         <TableRow key={row.name}>
                             <TableCell component="th" scope="row">
-                            <Link to="/usuario/chat">{row.name}</Link>
+                            {row.name}
                                 <Menu>
-                                    <MenuItem><Link to="/usuario/chat">{row.name}</Link>
+                                    <MenuItem>
+                                        {row.name}
                                     </MenuItem>
                                 </Menu>
                             </TableCell>

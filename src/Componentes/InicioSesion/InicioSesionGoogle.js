@@ -28,11 +28,6 @@ class InicioSesionGoogle extends Component {
         if (cookies.get('estadosesion')) {
             firebase.auth().signOut()
             cookies.remove('estadosesion', { path: "/" })
-            cookies.remove('cTamano', { path: "/" });
-            cookies.remove('cPosicion', { path: "/" });
-            cookies.remove('cPosicion2', { path: "/" });
-            cookies.remove('cColor', { path: "/" });
-            cookies.remove('cContenido', { path: "/" });
         }
         firebase.auth().onAuthStateChanged(user => {
             this.setState({ isSignedIn: !!user })
@@ -56,28 +51,21 @@ class InicioSesionGoogle extends Component {
     loginfacebook = () => {
         var provider = new firebase.auth.FacebookAuthProvider();
         firebase.auth().signInWithPopup(provider).then((result) => {
-            var token = result.credential.accessToken;
+            console.log(result.credential.accessToken)
             var user = result.user;
             this.setState({ id: user.l, nombre: user.displayName, foto: user.photoURL })
         }).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            var email = error.email;
-            var credential = error.credential;
+            console.log(error.code)
         });
         this.llenarCookies(firebase.auth().currentUser)
     }
     logingoogle = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then((result) => {
-            var token = result.credential.accessToken;
             var user = result.user;
             this.setState({ id: user.l, nombre: user.displayName, foto: user.photoURL })
         }).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            var email = error.email;
-            var credential = error.credential;
+            console.log(error.code)
         });
         this.llenarCookies(firebase.auth().currentUser)
     }

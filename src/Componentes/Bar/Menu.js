@@ -17,9 +17,6 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
 import firebase from "firebase";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import Icon from '@material-ui/core/Icon';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -140,7 +137,7 @@ export default function PrimarySearchAppBar(props) {
       onClose={() => handleMenuClose()}
     >
       <MenuItem onClick={() => handleMenuClose()} >
-        <Link to="/user/grupo">Chat</Link>
+        Chat
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={cerrarSesion}>Cerrar Sesion</MenuItem>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, TitleBar, TextInput, MessageList, Message, MessageText, AgentBar, Title, Subtitle, MessageGroup, MessageButtons, MessageButton, MessageTitle, MessageMedia, TextComposer, Row, Fill, Fit, IconButton, SendButton, EmojiIcon, CloseIcon, Column, RateGoodIcon, RateBadIcon, Bubble, SendIcon, FixedWrapper } from '@livechat/ui-kit'
+import { Avatar, TitleBar, MessageList, Message, MessageText, AgentBar, Title, Subtitle, MessageGroup, TextComposer, Row, Fill, Fit, IconButton, CloseIcon, Column, RateGoodIcon, RateBadIcon, SendIcon } from '@livechat/ui-kit'
 import Button from '@material-ui/core/Button';
 import '../../Css/Appp.css';
 import TextField from '@material-ui/core/TextField';
@@ -10,39 +10,6 @@ import "firebase/firestore";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
-const theme = {
-    vars: {
-        'primary-color': '#427fe1',
-        'secondary-color': '#fbfbfb',
-        'tertiary-color': '#fff',
-        'avatar-border-color': 'blue',
-    },
-    AgentBar: {
-        Avatar: {
-            size: '42px',
-        },
-        css: {
-            backgroundColor: 'var(--secondary-color)',
-            borderColor: 'var(--avatar-border-color)',
-        }
-    },
-    Message: {
-        css: {
-            fontWeight: 'bold',
-        },
-    },
-    Avatar: {
-        size: '40px',
-        css: {
-            borderColor: 'blue',
-        },
-    },
-    TextComposer: {
-        css: {
-            'color': '#000',
-        },
-    },
-}
 
 class App extends React.Component {
     constructor(props) {
@@ -66,14 +33,13 @@ class App extends React.Component {
     setData() {
         var db = firebase.firestore();
         let docReaf = db.collection('messages').doc();
-        let setAda = docReaf.set({
+        docReaf.set({
             id: this.state.messages.length,
             text: this.state.mesasge,
             idu: this.state.id,
             foto: this.state.foto,
             nombre: this.state.nombre,
         });
-
         this.getData()
     }
     getData() {
@@ -151,9 +117,9 @@ class App extends React.Component {
                 <div style={{ flexGrow: 1, minHeight: 0, height: '100%', }}>
                     <MessageList active >
                         {this.state.messages2.map(messages => {
-                            return this.state.id == messages.idu & messages.nombre == this.state.nombre ?
+                            return this.state.id === messages.idu & messages.nombre === this.state.nombre ?
                                 <MessageGroup onlyFirstWithMeta key={messages.id} >
-                                    <Message date="21:38" isOwn={this.state.id == messages.idu} authorName={messages.nombre}>
+                                    <Message date="21:38" isOwn={this.state.id === messages.idu} authorName={messages.nombre}>
                                         <MessageText>
                                             {messages.text}
                                         </MessageText>
