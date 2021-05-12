@@ -10,14 +10,13 @@ import "firebase/firestore";
 import Sesion from './componentes/Sesion';
 
 var firebaseConfig = {
-  apiKey: "AIzaSyDt9FQdiKfAxHIFVJiRWy9cTyxQFFZppms",
-  authDomain: "chat-6c018.firebaseapp.com",
-  databaseURL: "https://chat-6c018.firebaseio.com",
-  projectId: "chat-6c018",
-  storageBucket: "chat-6c018.appspot.com",
-  messagingSenderId: "129209462668",
-  appId: "1:129209462668:web:0bdac24471d95d4a49f0a9",
-  measurementId: "G-WE7ZQX1QME"
+  apiKey: "AIzaSyCkgI9EsXFLzXxD0l4bT8L09wLuvvQKLhU",
+  authDomain: "chat-react-4ad44.firebaseapp.com",
+  databaseURL: "https://chat-react-4ad44.firebaseio.com",
+  projectId: "chat-react-4ad44",
+  storageBucket: "chat-react-4ad44.appspot.com",
+  messagingSenderId: "615934840211",
+  appId: "1:615934840211:web:a519314a76374a92a8ec66"
 };
 firebase.initializeApp(firebaseConfig);
 var storage = firebase.storage();
