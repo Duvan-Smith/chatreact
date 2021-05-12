@@ -52,7 +52,6 @@ export default function SimpleTable() {
                         <TableRow key={row.name}>
                             <TableCell component="th" scope="row">
                             <Link to="/usuario/chat">{row.name}</Link>
-                                
                                 <Menu>
                                     <MenuItem><Link to="/usuario/chat">{row.name}</Link>
                                     </MenuItem>

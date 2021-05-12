@@ -15,11 +15,14 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
+import firebase from "firebase";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Icon from '@material-ui/core/Icon';
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 const useStyles = makeStyles(theme => ({
   avatar: {
     margin: 5,
@@ -109,7 +112,22 @@ export default function PrimarySearchAppBar(props) {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  const cerrarSesion = () => {
+    cookies.remove('id', { path: "/" });
+    cookies.remove('nombreusuario', { path: "/" });
+    cookies.remove('rol', { path: "/" });
+    cookies.remove('fechacreacion', { path: "/" });
+    cookies.remove('primernombre', { path: "/" });
+    cookies.remove('primerapellido', { path: "/" });
+    cookies.set('estadosesion', true, { path: "/" });
+    cookies.remove('cTamano', { path: "/" });
+    cookies.remove('cPosicion', { path: "/" });
+    cookies.remove('cPosicion2', { path: "/" });
+    cookies.remove('cColor', { path: "/" });
+    cookies.remove('cContenido', { path: "/" });
+    window.location.href = "./";
+    firebase.auth().signOut()
+  }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -119,10 +137,13 @@ export default function PrimarySearchAppBar(props) {
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
-      onClose={()=>handleMenuClose()}
+      onClose={() => handleMenuClose()}
     >
-      <MenuItem onClick={()=>handleMenuClose()} ><Link to="/usuario/chat">Chat</Link></MenuItem>
+      <MenuItem onClick={() => handleMenuClose()} >
+        <Link to="/user/grupo">Chat</Link>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={cerrarSesion}>Cerrar Sesion</MenuItem>
     </Menu>
   );
 
@@ -181,7 +202,7 @@ export default function PrimarySearchAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            {props.nombre}
+            {cookies.get('primernombre')}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -200,7 +221,6 @@ export default function PrimarySearchAppBar(props) {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={0} color="secondary">
-                
                 <MailIcon />
               </Badge>
             </IconButton>
@@ -217,10 +237,7 @@ export default function PrimarySearchAppBar(props) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt="Remy Sharp" src={props.foto} className={classes.avatar} />
-
-              {//<AccountCircle />
-              }
+              <Avatar alt="Remy Sharp" src={cookies.get('Avatar')} className={classes.avatar} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

@@ -1,21 +1,15 @@
 import * as React from 'react'
 import { Avatar, TitleBar, TextInput, MessageList, Message, MessageText, AgentBar, Title, Subtitle, MessageGroup, MessageButtons, MessageButton, MessageTitle, MessageMedia, TextComposer, Row, Fill, Fit, IconButton, SendButton, EmojiIcon, CloseIcon, Column, RateGoodIcon, RateBadIcon, Bubble, SendIcon, FixedWrapper } from '@livechat/ui-kit'
 import Button from '@material-ui/core/Button';
-import './Appp.css';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ChildCareIcon from '@material-ui/icons/ChildCare';
+import '../../Css/Appp.css';
 import TextField from '@material-ui/core/TextField';
-
-
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 const theme = {
     vars: {
         'primary-color': '#427fe1',
@@ -38,8 +32,8 @@ const theme = {
         },
     },
     Avatar: {
-        size: '40px', // special Avatar's property, supported by this component
-        css: { // css object with any CSS properties
+        size: '40px',
+        css: {
             borderColor: 'blue',
         },
     },
@@ -54,9 +48,9 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: "",
-            nombre: "",
-            foto: "",
+            id: cookies.get('uid'),
+            nombre: cookies.get('primernombre'),
+            foto: cookies.get('Avatar'),
             mesasge: "",
             messages: [
             ],
@@ -86,7 +80,7 @@ class App extends React.Component {
         var db = firebase.firestore();
         this.setState({ messages: [] })
 
-        this.setState({ id: this.props.id, nombre: this.props.nombre, foto: this.props.foto })
+        this.setState({ id: cookies.get('uid'), nombre: cookies.get('primernombre'), foto: cookies.get('Avatar') })
 
         db.collection('messages').get().then((snapshot) => {
             snapshot.forEach((doc) => {
@@ -105,7 +99,6 @@ class App extends React.Component {
         this.setState({ mesasge: e.target.value })
         console.log(this.state.mesasge)
     }
-    /* Inicia cuando cargar interfaces del chat */
 
     handelSubmit = (e) => {
         e.preventDefault();
@@ -177,7 +170,6 @@ class App extends React.Component {
                         }
                     </MessageList>
                     <form onSubmit={this.handelSubmit.bind(this)}>
-
                         <TextComposer >
                             <Row align="center">
                                 <Fill>
@@ -199,7 +191,6 @@ class App extends React.Component {
                         </TextComposer>
                     </form>
                 </div>
-
             </div>
         );
     }
