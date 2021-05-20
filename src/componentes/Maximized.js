@@ -1,24 +1,35 @@
 import * as React from 'react'
-import { Avatar, TitleBar, MessageList, Message, MessageText, AgentBar, Title, Subtitle, MessageGroup, TextComposer, Row, Fill, Fit, IconButton, CloseIcon, Column, RateGoodIcon, RateBadIcon, SendIcon } from '@livechat/ui-kit'
+import { Avatar, TitleBar, TextInput, MessageList, Message, MessageText, AgentBar, Title, Subtitle, MessageGroup, MessageButtons, MessageButton, MessageTitle, MessageMedia, TextComposer, Row, Fill, Fit, IconButton, SendButton, EmojiIcon, CloseIcon, Column, RateGoodIcon, RateBadIcon, Bubble, SendIcon, FixedWrapper } from '@livechat/ui-kit'
 import Button from '@material-ui/core/Button';
-import '../../Css/Appp.css';
+import './Appp.css';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ChildCareIcon from '@material-ui/icons/ChildCare';
 import TextField from '@material-ui/core/TextField';
+
+
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
-import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: cookies.get('uid'),
-            nombre: cookies.get('primernombre'),
-            foto: cookies.get('Avatar'),
+            id: "",
+            nombre: "",
+            foto: "",
+            fotoA: "",
+            idA: "",
+            id2A: "",
+            nombreA: "",
             mesasge: "",
+            idchat: "",
             messages: [
             ],
             messages2: [
@@ -33,7 +44,7 @@ class App extends React.Component {
     setData() {
         var db = firebase.firestore();
         let docReaf = db.collection('messages').doc();
-        docReaf.set({
+        let setAda = docReaf.set({
             id: this.state.messages.length,
             text: this.state.mesasge,
             idu: this.state.id,
@@ -49,7 +60,7 @@ class App extends React.Component {
         var db = firebase.firestore();
         this.setState({ messages: [] })
 
-        this.setState({ id: cookies.get('uid'), nombre: cookies.get('primernombre'), foto: cookies.get('Avatar'), fotoA: this.props.fotoA, idA: this.props.idA, id2A: this.props.id2A, nombreA: this.props.nombreA, idchat: this.props.nombre.concat(this.props.nombreA) })
+        this.setState({ id: this.props.id, nombre: this.props.nombre, foto: this.props.foto, fotoA: this.props.fotoA, idA: this.props.idA, id2A: this.props.id2A, nombreA: this.props.nombreA, idchat: this.props.nombre.concat(this.props.nombreA) })
 
         db.collection('messages').get().then((snapshot) => {
             snapshot.forEach((doc) => {
@@ -119,7 +130,9 @@ class App extends React.Component {
                         </Column>
                         <Column flexFill>
                             <Title>{this.props.nombre}</Title>
-                            <Subtitle>{this.props.id2A}</Subtitle>
+                            {
+                                //<Subtitle>{this.props.id2A}</Subtitle>
+                            }
                         </Column>
                         <Column flexFit>
                             <Row>
