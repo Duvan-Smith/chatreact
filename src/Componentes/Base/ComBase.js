@@ -25,7 +25,7 @@ class Usuario extends React.Component {
                         display: 'flex',
                         alignItems: 'left',
                     }}>
-                    <Grupo/>
+                    {/* <Grupo/> */}
                     <Sesion/>
 
                 </div>

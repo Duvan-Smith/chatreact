@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import InicioSesion from '../Componentes/InicioSesion/InicioSesionGoogle';
 import '../Css/App.css';
-import Grupo from '../Componentes/Chat/Grupo';
 import Base from '../Componentes/Base/ComBase';
 
 class Routes extends React.Component {
@@ -16,8 +15,7 @@ class Routes extends React.Component {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/" component={InicioSesion} />
-                    <Route exact path="/base" component={Base} />
-                    <Route exact path="/user/grupo" component={Grupo} />
+                    <Route exact path="/cuenta" component={Base} />
                 </Switch>
             </BrowserRouter>
         );

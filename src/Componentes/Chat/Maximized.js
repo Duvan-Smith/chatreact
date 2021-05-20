@@ -26,7 +26,7 @@ class App extends React.Component {
         }
     }
     cambiarLista() {
-        this.state.messages.forEach((doc) => {
+        this.state.messages.forEach((doc, index) => {
             this.state.messages2[(doc.id - 1)] = doc;
         })
     }
@@ -37,16 +37,19 @@ class App extends React.Component {
             id: this.state.messages.length,
             text: this.state.mesasge,
             idu: this.state.id,
+            nombreA: this.state.nombreA,
+            idA: this.state.idA,
             foto: this.state.foto,
             nombre: this.state.nombre,
         });
+
         this.getData()
     }
     getData() {
         var db = firebase.firestore();
         this.setState({ messages: [] })
 
-        this.setState({ id: cookies.get('uid'), nombre: cookies.get('primernombre'), foto: cookies.get('Avatar') })
+        this.setState({ id: cookies.get('uid'), nombre: cookies.get('primernombre'), foto: cookies.get('Avatar'), fotoA: this.props.fotoA, idA: this.props.idA, id2A: this.props.id2A, nombreA: this.props.nombreA, idchat: this.props.nombre.concat(this.props.nombreA) })
 
         db.collection('messages').get().then((snapshot) => {
             snapshot.forEach((doc) => {
@@ -65,6 +68,7 @@ class App extends React.Component {
         this.setState({ mesasge: e.target.value })
         console.log(this.state.mesasge)
     }
+    /* Inicia cuando cargar interfaces del chat */
 
     handelSubmit = (e) => {
         e.preventDefault();
@@ -75,11 +79,30 @@ class App extends React.Component {
             idu: this.state.id,
             foto: this.state.foto,
             nombre: this.state.nombre,
+            idchat: this.state.idchat,
         };
         //imprimir
         list.push(newMessage)
         this.setState({ messages: list, id: this.state.messages.length });
         this.setData()
+    }
+    rendermensage(messages) {
+        return (this.state.id == messages.idu && messages.nombre == this.state.nombre ?
+            <MessageGroup onlyFirstWithMeta key={messages.id} >
+                <Message date="21:38" isOwn={true} /*authorName={messages.nombre}*/>
+                    <MessageText style={{ backgroundColor: "#1769aa", border: "1px", padding: "10px", 'borderRadius': '5px', color: 'white' }}>
+                        {messages.text}
+                    </MessageText>
+                </Message>
+            </MessageGroup> :
+            <MessageGroup avatar={messages.foto} onlyFirstWithMeta>
+                <Message authorName={messages.nombre} date="21:37">
+                    <MessageText>
+                        {messages.text}
+                    </MessageText>
+                </Message>
+            </MessageGroup>
+        )
     }
     componentDidMount() {
         this.getData()
@@ -88,15 +111,15 @@ class App extends React.Component {
         return (
             <div style={{ maxWidth: '100%', height: 300 }}>
                 {this.cambiarLista()}
-                <TitleBar rightIcons={[<IconButton key="close"><CloseIcon /></IconButton>,]} title={this.state.nombre} onClick={this.props.minimize} />
+                <TitleBar rightIcons={[<IconButton key="close"><CloseIcon /></IconButton>,]} title={this.state.nombreA} onClick={this.props.minimize} />
                 <AgentBar>
                     <Row flexFill>
                         <Column>
-                            <Avatar imgUrl={this.state.foto} />
+                            <Avatar imgUrl={this.props.fotoA} />
                         </Column>
                         <Column flexFill>
-                            <Title>{this.state.nombre}</Title>
-                            <Subtitle>{this.state.id}</Subtitle>
+                            <Title>{this.props.nombre}</Title>
+                            <Subtitle>{this.props.id2A}</Subtitle>
                         </Column>
                         <Column flexFit>
                             <Row>
@@ -117,25 +140,14 @@ class App extends React.Component {
                 <div style={{ flexGrow: 1, minHeight: 0, height: '100%', }}>
                     <MessageList active >
                         {this.state.messages2.map(messages => {
-                            return this.state.id === messages.idu & messages.nombre === this.state.nombre ?
-                                <MessageGroup onlyFirstWithMeta key={messages.id} >
-                                    <Message date="21:38" isOwn={this.state.id === messages.idu} authorName={messages.nombre}>
-                                        <MessageText>
-                                            {messages.text}
-                                        </MessageText>
-                                    </Message>
-                                </MessageGroup> :
-                                <MessageGroup avatar={messages.foto} onlyFirstWithMeta>
-                                    <Message authorName={messages.nombre} date="21:37">
-                                        <MessageText>
-                                            {messages.text}
-                                        </MessageText>
-                                    </Message>
-                                </MessageGroup>
+                            return this.state.nombre != this.state.nombreA && ((this.state.nombreA == messages.nombre || this.state.nombreA == messages.nombreA) && (this.state.nombre == messages.nombre || this.state.nombre == messages.nombreA)) ?
+                                this.rendermensage(messages) :
+                                null
                         })
                         }
                     </MessageList>
                     <form onSubmit={this.handelSubmit.bind(this)}>
+
                         <TextComposer >
                             <Row align="center">
                                 <Fill>
@@ -157,6 +169,7 @@ class App extends React.Component {
                         </TextComposer>
                     </form>
                 </div>
+
             </div>
         );
     }

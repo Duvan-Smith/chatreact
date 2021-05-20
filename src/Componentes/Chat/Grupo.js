@@ -8,55 +8,22 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles({
-    root: {
-        width: '40%',
-        overflowX: 'auto',
-    },
-    table: {
-        minWidth: 150,
-    },
-});
-
-function createData(name, id, foto) {
-    return { name, id, foto };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159,'foto'),
-    createData('Ice cream sandwich', 237,'foto'),
-    createData('Eclair', 262,'foto'),
-    createData('Cupcake', 305,'foto'),
-    createData('Gingerbread', 356,'foto'),
-];
-
-export default function SimpleTable() {
-    const classes = useStyles();
-
-    return (
-        <Paper className={classes.root}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Nombres</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                            {row.name}
-                                <Menu>
-                                    <MenuItem>
-                                        {row.name}
-                                    </MenuItem>
-                                </Menu>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </Paper>
-    );
+export default class SimpleTable extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
+    render() {
+        return (
+            <Paper >
+                <Button onClick={() => this.props.selectCard({ id: this.props.id, id2: this.props.id2, nombre: this.props.nombre, foto: this.props.foto })}>
+                    {this.props.nombre}
+                </Button>
+                <hr />
+            </Paper>
+        );
+    }
 }
