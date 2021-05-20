@@ -10,7 +10,9 @@ import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 class CenteredGrid extends React.Component {
   constructor(props) {
     super(props)
@@ -26,7 +28,8 @@ class CenteredGrid extends React.Component {
     var db = firebase.firestore();
     this.setState({ rows: [] })
 
-    this.setState({ id: this.props.usuario.id, nombre: this.props.usuario.nombre, foto: this.props.usuario.foto })
+    // this.setState({ id: this.props.usuario.id, nombre: this.props.usuario.nombre, foto: this.props.usuario.foto })
+    this.setState({ id: cookies.get('uid'), nombre: cookies.get('primernombre'), foto: cookies.get('Avatar') })
 
     db.collection('users').get().then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -66,7 +69,7 @@ class CenteredGrid extends React.Component {
       <div>
         <Grid container spacing={0}>
           <Grid item xs={12}>
-            <Menu nombre={this.state.nombre} foto={this.state.foto} />
+            <Menu/>
           </Grid>
           <Grid item xs={2} style={{border: "1px"}}>
             {this.renderCards()}
