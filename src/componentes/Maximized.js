@@ -1,13 +1,10 @@
 import * as React from 'react'
-import { Avatar, TitleBar, TextInput, MessageList, Message, MessageText, AgentBar, Title, Subtitle, MessageGroup, MessageButtons, MessageButton, MessageTitle, MessageMedia, TextComposer, Row, Fill, Fit, IconButton, SendButton, EmojiIcon, CloseIcon, Column, RateGoodIcon, RateBadIcon, Bubble, SendIcon, FixedWrapper } from '@livechat/ui-kit'
+import { Avatar, TitleBar, MessageList, Message, MessageText, AgentBar, Title, 
+    MessageGroup, TextComposer, Row, Fill, Fit, IconButton, CloseIcon, Column, 
+    RateGoodIcon, RateBadIcon, SendIcon } from '@livechat/ui-kit'
 import Button from '@material-ui/core/Button';
-import './Appp.css';
+import '../Css/Appp.css';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ChildCareIcon from '@material-ui/icons/ChildCare';
 import TextField from '@material-ui/core/TextField';
 
 
@@ -44,7 +41,7 @@ class App extends React.Component {
     setData() {
         var db = firebase.firestore();
         let docReaf = db.collection('messages').doc();
-        let setAda = docReaf.set({
+        docReaf.set({
             id: this.state.messages.length,
             text: this.state.mesasge,
             idu: this.state.id,
@@ -98,7 +95,7 @@ class App extends React.Component {
         this.setData()
     }
     rendermensage(messages) {
-        return (this.state.id == messages.idu && messages.nombre == this.state.nombre ?
+        return (this.state.id === messages.idu && messages.nombre === this.state.nombre ?
             <MessageGroup onlyFirstWithMeta key={messages.id} >
                 <Message date="21:38" isOwn={true} /*authorName={messages.nombre}*/>
                     <MessageText style={{ backgroundColor: "#1769aa", border: "1px", padding: "10px", 'borderRadius': '5px', color: 'white' }}>
@@ -153,7 +150,9 @@ class App extends React.Component {
                 <div style={{ flexGrow: 1, minHeight: 0, height: '100%', }}>
                     <MessageList active >
                         {this.state.messages2.map(messages => {
-                            return this.state.nombre != this.state.nombreA && ((this.state.nombreA == messages.nombre || this.state.nombreA == messages.nombreA) && (this.state.nombre == messages.nombre || this.state.nombre == messages.nombreA)) ?
+                            return this.state.nombre !== this.state.nombreA && 
+                            ((this.state.nombreA === messages.nombre || this.state.nombreA === messages.nombreA) && 
+                            (this.state.nombre === messages.nombre || this.state.nombre === messages.nombreA)) ?
                                 this.rendermensage(messages) :
                                 null
                         })

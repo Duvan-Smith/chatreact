@@ -1,13 +1,13 @@
 import React from 'react';
-import './App.css';
+import '../Css/App.css';
 import Button from '@material-ui/core/Button';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
 
-import Sesion from './componentes/Sesion';
+import Sesion from '../Componentes/Sesion';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCkgI9EsXFLzXxD0l4bT8L09wLuvvQKLhU",
@@ -20,7 +20,6 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var storage = firebase.storage();
-var storageRef = storage.ref();
 
 class App extends React.Component {
   constructor(props) {
@@ -35,7 +34,7 @@ class App extends React.Component {
   setInsert() {
     var c = 0;
     this.state.rows.forEach((doc) => {
-      if (doc.id == this.state.id && doc.nombre == this.state.nombre) {
+      if (doc.id === this.state.id && doc.nombre === this.state.nombre) {
         c = c + 1;
       }
     })
@@ -46,7 +45,7 @@ class App extends React.Component {
   setData() {
     var db = firebase.firestore();
     let docReaf = db.collection('users').doc();
-    let setAda = docReaf.set({
+    docReaf.set({
       id: this.state.id,
       foto: this.state.foto,
       nombre: this.state.nombre,
@@ -56,29 +55,33 @@ class App extends React.Component {
   loginfacebook = () => {
     var provider = new firebase.auth.FacebookAuthProvider();
     firebase.auth().signInWithPopup(provider).then((result) => {
-      var token = result.credential.accessToken;
+      console.log(result.credential.accessToken)
+      // var token = result.credential.accessToken;
       var user = result.user;
       this.setState({ id: user.l, nombre: user.displayName, foto: user.photoURL })
       this.setInsert()
     }).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
+      console.log(error.code)
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // var email = error.email;
+      // var credential = error.credential;
     });
   }
   logingoogle = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then((result) => {
-      var token = result.credential.accessToken;
+      console.log(result.credential.accessToken)
+      // var token = result.credential.accessToken;
       var user = result.user;
       this.setState({ id: user.l, nombre: user.displayName, foto: user.photoURL })
       this.setInsert()
     }).catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
+      console.log(error.code)
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // var email = error.email;
+      // var credential = error.credential;
     });
   }
   getData() {

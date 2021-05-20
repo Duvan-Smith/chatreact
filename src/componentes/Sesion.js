@@ -1,11 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Menu from './Menu';
-import Avatar from '@material-ui/core/Avatar';
-import Icon from '@material-ui/core/Icon';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Maximized from './Maximized'
 import Minimized from './Minimized'
 import { ThemeProvider, FixedWrapper } from '@livechat/ui-kit';
