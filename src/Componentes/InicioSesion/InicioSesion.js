@@ -49,7 +49,7 @@ class App extends React.Component {
     });
   }
 
-  llenarCookies = async (user) => {
+  llenarCookies = (user) => {
     if (user != null) {
       cookies.set("email", user.email, { path: "/" });
       cookies.set("rol", "user", { path: "/" });
@@ -62,7 +62,7 @@ class App extends React.Component {
     }
   };
 
-  cerrarSesion = async () => {
+  cerrarSesion = () => {
     firebase.auth().signOut();
   };
 
@@ -130,7 +130,7 @@ class App extends React.Component {
       });
     this.llenarCookies(firebase.auth().currentUser);
   };
-  
+
   render() {
     return (
       <div className="App">

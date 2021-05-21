@@ -6,6 +6,9 @@ import Minimized from "./Chat/Minimized";
 import { ThemeProvider, FixedWrapper } from "@livechat/ui-kit";
 import Grupo from "./ListaPersonas/Personas";
 import Paper from "@material-ui/core/Paper";
+import Drawer from "@material-ui/core/Drawer";
+import Button from "@material-ui/core/Button";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 
 import * as firebase from "firebase/app";
 import "firebase/storage";
@@ -23,8 +26,13 @@ class CenteredGrid extends React.Component {
       nombrerow: !cookies.get("nombrerow") ? "" : cookies.get("nombrerow"),
       fotorow: !cookies.get("fotorow") ? "" : cookies.get("fotorow"),
       rows: [],
+      anchor: !cookies.get("anchor") ? false : !cookies.get("anchor"),
     };
   }
+
+  toggleDrawer = () => {
+    this.setState({ anchor: !this.state.anchor });
+  };
 
   getData() {
     var db = firebase.firestore();
@@ -68,16 +76,28 @@ class CenteredGrid extends React.Component {
           <Grid item xs={12}>
             <Menu />
           </Grid>
-          {!cookies.get("rows") ? (
-            <></>
-          ) : (
-            <Grid item xs={2} style={{ border: "1px" }}>
-              <Paper>
-                <Grupo />
-              </Paper>
-            </Grid>
-          )}
+          <React.Fragment key={"left"}>
+            <SwipeableDrawer
+              anchor={"left"}
+              open={this.state.anchor}
+              onClose={() => this.toggleDrawer()}
+              onOpen={() => this.toggleDrawer()}
+            >
+              {!cookies.get("rows") ? (
+                <></>
+              ) : (
+                <Paper>
+                  <Grupo />
+                </Paper>
+              )}
+            </SwipeableDrawer>
+          </React.Fragment>
           <Grid item xs={12}>
+            <div className="row" style={{ margin: 20, alignItems: "center" }}>
+              <div className="col-6">
+                <Button onClick={() => this.toggleDrawer()}>{"Ver lista de amigos agregados"}</Button>
+              </div>
+            </div>
             {this.state.idrow !== "" ? (
               <ThemeProvider>
                 <FixedWrapper.Root maximizedOnInit>

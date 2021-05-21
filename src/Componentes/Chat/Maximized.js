@@ -7,6 +7,7 @@ import {
   MessageText,
   AgentBar,
   Title,
+  Subtitle,
   MessageGroup,
   TextComposer,
   Row,
@@ -28,7 +29,9 @@ import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -71,14 +74,14 @@ class App extends React.Component {
     this.setState({ messages: [] });
 
     this.setState({
-      id: this.props.id,
-      nombre: this.props.nombre,
-      foto: this.props.foto,
-      fotoA: this.props.fotoA,
-      idA: this.props.idA,
-      id2A: this.props.id2A,
-      nombreA: this.props.nombreA,
-      idchat: this.props.nombre.concat(this.props.nombreA),
+      id: cookies.get("uid"),
+      nombre: cookies.get("primernombre"),
+      foto: cookies.get("Avatar"),
+      fotoA: cookies.get("fotorow"),
+      idA: cookies.get("idrow"),
+      id2A: cookies.get("id2row"),
+      nombreA: cookies.get("nombrerow"),
+      idchat: cookies.get("primernombre").concat(cookies.get("nombrerow")),
     });
 
     db.collection("messages")
@@ -117,11 +120,18 @@ class App extends React.Component {
     this.setState({ messages: list, id: this.state.messages.length });
     this.setData();
   };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.foto !== this.state.foto) {
+      this.getData();
+    }
+  }
+  
   rendermensage(messages) {
     return this.state.id === messages.idu &&
       messages.nombre === this.state.nombre ? (
       <MessageGroup onlyFirstWithMeta key={messages.id}>
-        <Message date="21:38" isOwn={true} /*authorName={messages.nombre}*/>
+        <Message date="21:38" isOwn={true} authorName={messages.nombre}>
           <MessageText
             style={{
               backgroundColor: "#1769aa",
@@ -156,7 +166,7 @@ class App extends React.Component {
               <CloseIcon />
             </IconButton>,
           ]}
-          title={this.state.nombreA}
+          title={this.props.nombreA}
           onClick={this.props.minimize}
         />
         <AgentBar>
@@ -165,10 +175,8 @@ class App extends React.Component {
               <Avatar imgUrl={this.props.fotoA} />
             </Column>
             <Column flexFill>
-              <Title>{this.props.nombre}</Title>
-              {
-                //<Subtitle>{this.props.id2A}</Subtitle>
-              }
+              <Title>{this.props.nombreA}</Title>
+              <Subtitle>{this.props.id2A}</Subtitle>
             </Column>
             <Column flexFit>
               <Row>
