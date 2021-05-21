@@ -12,8 +12,9 @@ import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
+import Cookies from "universal-cookie";
 
-
+const cookies = new Cookies();
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -57,7 +58,12 @@ class App extends React.Component {
         var db = firebase.firestore();
         this.setState({ messages: [] })
 
-        this.setState({ id: this.props.id, nombre: this.props.nombre, foto: this.props.foto, fotoA: this.props.fotoA, idA: this.props.idA, id2A: this.props.id2A, nombreA: this.props.nombreA, idchat: this.props.nombre.concat(this.props.nombreA) })
+        this.setState({ 
+            id: this.props.id, nombre: this.props.nombre, 
+            foto: this.props.foto, fotoA: this.props.fotoA, 
+            idA: this.props.idA, id2A: this.props.id2A, nombreA: this.props.nombreA, 
+            idchat: this.props.nombre.concat(this.props.nombreA) 
+        })
 
         db.collection('messages').get().then((snapshot) => {
             snapshot.forEach((doc) => {

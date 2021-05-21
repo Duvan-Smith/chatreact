@@ -1,22 +1,42 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
+import React from "react";
+import Button from "@material-ui/core/Button";
 
-import { BrowserRouter as Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 export default class SimpleTable extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-        }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  CargarChat = async (user) => {
+    if (user != null) {
+      cookies.set("idrow", user.id, { path: "/" });
+      cookies.set("id2row", user.id2, { path: "/" });
+      cookies.set("nombrerow", user.nombre, { path: "/" });
+      cookies.set("fotorow", user.foto, { path: "/" });
     }
-    render() {
-        return (
-            <Paper >
-                <Link onClick={() => this.props.selectCard({ id: this.props.id, id2: this.props.id2, nombre: this.props.nombre, foto: this.props.foto })} to="/usuario">
-                    {this.props.nombre}
-                </Link>
+  };
+  render() {
+    return (
+      <>
+        {cookies.get("rows").map((d) => {
+          return (
+            <div className="row" style={{ margin: 20 }}>
+              <div className="col-12">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.CargarChat(d)}
+                >
+                  {d.nombre}
+                </Button>
                 <hr />
-            </Paper>
-        );
-    }
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+  }
 }

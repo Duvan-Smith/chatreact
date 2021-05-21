@@ -6,6 +6,7 @@ import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
 import Cookies from "universal-cookie";
+import Img from "../Data/img.jpg";
 
 const cookies = new Cookies();
 class App extends React.Component {
@@ -55,7 +56,7 @@ class App extends React.Component {
       cookies.set("signin", user.providerId, { path: "/" });
       cookies.set("uid", user.uid, { path: "/" });
       alert(`Bienvenido ${user.displayName}`);
-      window.location.href = "./base";
+      window.location.href = "./cuenta";
     }
   };
   cerrarSesion = async () => {
@@ -125,9 +126,22 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {this.state.isSignedIn ? (
-          <span>{this.llenarCookies(firebase.auth().currentUser)}</span>
-        ) : (
+        <div className="row" style={{ margin: 20 }}>
+              <div className="col-12">
+              <img 
+                            style={{
+                                marginLeft: 10,
+                                marginRight: 10,
+                                marginBottom: 10,
+                                marginTop: 10,
+                            }}
+                            width="70%"
+                            height="auto"
+                            src={Img} alt="StepperFin" 
+                        />
+          </div>
+              <div className="col-12">
+
           <>
             <Button
               variant="contained"
@@ -144,7 +158,8 @@ class App extends React.Component {
               Iniciar sesión google
             </Button>
           </>
-        )}
+          </div>
+          </div>
       </div>
     );
   }
