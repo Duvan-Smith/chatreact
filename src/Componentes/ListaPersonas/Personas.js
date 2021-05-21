@@ -9,7 +9,7 @@ export default class SimpleTable extends React.Component {
     super(props);
     this.state = {};
   }
-  CargarChat = async (user) => {
+  CargarChat = (user) => {
     if (user != null) {
       cookies.set("idrow", user.id, { path: "/" });
       cookies.set("id2row", user.id2, { path: "/" });

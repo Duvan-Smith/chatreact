@@ -1,10 +1,10 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Menu from "./Menu";
-import Maximized from "./Maximized";
-import Minimized from "./Minimized";
+import Menu from "./Bar/Menu";
+import Maximized from "./Chat/Maximized";
+import Minimized from "./Chat/Minimized";
 import { ThemeProvider, FixedWrapper } from "@livechat/ui-kit";
-import Grupo from "./Grupo";
+import Grupo from "./ListaPersonas/Personas";
 import Paper from "@material-ui/core/Paper";
 
 import * as firebase from "firebase/app";
@@ -25,22 +25,15 @@ class CenteredGrid extends React.Component {
       rows: [],
     };
   }
+
   getData() {
     var db = firebase.firestore();
-    // this.setState({ rows: [] })
 
-    // this.setState({ id: this.props.usuario.id, nombre: this.props.usuario.nombre, foto: this.props.usuario.foto })
     this.setState({
       id: cookies.get("uid"),
       nombre: cookies.get("primernombre"),
       foto: cookies.get("Avatar"),
     });
-    // this.setState({
-    //   idrow: cookies.get("idrow"),
-    //   id2row: cookies.get("id2row"),
-    //   nombrerow: cookies.get("nombrerow"),
-    //   fotorow: cookies.get("fotorow"),
-    // });
 
     db.collection("users")
       .get()
@@ -57,24 +50,17 @@ class CenteredGrid extends React.Component {
         console.log("Error getting documents", err);
       });
   }
+
   componentDidMount() {
     this.getData();
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevState.rows !== this.state.rows || prevState.id !== this.state.id) {
       this.getData();
     }
   }
-  selectCard = (card) => {
-    this.setState({ CardSelected: card });
-  };
-  renderCards = () => {
-    return (
-      <Paper>
-        <Grupo />
-      </Paper>
-    );
-  };
+
   render() {
     return (
       <div>
@@ -101,7 +87,6 @@ class CenteredGrid extends React.Component {
                       id={cookies.get("uid")}
                       nombre={cookies.get("primernombre")}
                       foto={cookies.get("Avatar")}
-
                       nombreA={cookies.get("nombrerow")}
                       fotoA={cookies.get("fotorow")}
                       idA={cookies.get("idrow")}

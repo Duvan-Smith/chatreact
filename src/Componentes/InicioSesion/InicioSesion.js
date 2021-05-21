@@ -1,12 +1,12 @@
 import React from "react";
-import "../Css/App.css";
+import "../../Css/App.css";
 import Button from "@material-ui/core/Button";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
 import Cookies from "universal-cookie";
-import Img from "../Data/img.jpg";
+import Img from "../../Data/img.jpg";
 
 const cookies = new Cookies();
 class App extends React.Component {
@@ -37,6 +37,7 @@ class App extends React.Component {
         console.log("Error getting documents", err);
       });
   }
+
   componentDidMount() {
     this.getData();
     if (cookies.get("estadosesion")) {
@@ -47,6 +48,7 @@ class App extends React.Component {
       this.setState({ isSignedIn: !!user });
     });
   }
+
   llenarCookies = async (user) => {
     if (user != null) {
       cookies.set("email", user.email, { path: "/" });
@@ -59,9 +61,11 @@ class App extends React.Component {
       window.location.href = "./cuenta";
     }
   };
+
   cerrarSesion = async () => {
     firebase.auth().signOut();
   };
+
   setInsert() {
     var c = 0;
     this.state.rows.forEach((doc) => {
@@ -73,6 +77,7 @@ class App extends React.Component {
       this.setData();
     }
   }
+
   setData() {
     var db = firebase.firestore();
     let docReaf = db.collection("users").doc();
@@ -83,6 +88,7 @@ class App extends React.Component {
       id2: this.state.rows.length,
     });
   }
+
   loginfacebook = () => {
     var provider = new firebase.auth.FacebookAuthProvider();
     firebase
@@ -101,8 +107,9 @@ class App extends React.Component {
       .catch(function (error) {
         console.log(error.code);
       });
-      this.llenarCookies(firebase.auth().currentUser)
+    this.llenarCookies(firebase.auth().currentUser);
   };
+
   logingoogle = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase
@@ -121,45 +128,46 @@ class App extends React.Component {
       .catch(function (error) {
         console.log(error.code);
       });
-      this.llenarCookies(firebase.auth().currentUser)
+    this.llenarCookies(firebase.auth().currentUser);
   };
+  
   render() {
     return (
       <div className="App">
         <div className="row" style={{ margin: 20 }}>
-              <div className="col-12">
-              <img 
-                            style={{
-                                marginLeft: 10,
-                                marginRight: 10,
-                                marginBottom: 10,
-                                marginTop: 10,
-                            }}
-                            width="70%"
-                            height="auto"
-                            src={Img} alt="StepperFin" 
-                        />
+          <div className="col-12">
+            <img
+              style={{
+                marginLeft: 10,
+                marginRight: 10,
+                marginBottom: 10,
+                marginTop: 10,
+              }}
+              width="65%"
+              height="auto"
+              src={Img}
+              alt="StepperFin"
+            />
           </div>
-              <div className="col-12">
-
-          <>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.loginfacebook}
-            >
-              Iniciar sesión facebook
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.logingoogle}
-            >
-              Iniciar sesión google
-            </Button>
-          </>
+          <div className="col-12">
+            <>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.loginfacebook}
+              >
+                Iniciar sesión facebook
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.logingoogle}
+              >
+                Iniciar sesión google
+              </Button>
+            </>
           </div>
-          </div>
+        </div>
       </div>
     );
   }

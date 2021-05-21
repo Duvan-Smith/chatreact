@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import '../Css/App.css';
-import Base from '../Componentes/Sesion';
-import InicioSesion from '../Componentes/Inicio';
+import Base from '../Componentes/Base';
+import InicioSesion from '../Componentes/InicioSesion/InicioSesion';
 
 class Routes extends React.Component {
   constructor(props) {
