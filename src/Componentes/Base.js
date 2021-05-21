@@ -64,7 +64,7 @@ class CenteredGrid extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.rows !== this.state.rows || prevState.id !== this.state.id) {
+    if (prevState.rows !== this.state.rows) {
       this.getData();
     }
   }
