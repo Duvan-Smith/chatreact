@@ -43,6 +43,17 @@ class App extends React.Component {
     if (cookies.get("estadosesion")) {
       firebase.auth().signOut();
       cookies.remove("estadosesion", { path: "/" });
+      cookies.remove("idrow", { path: "/" });
+      cookies.remove("id2row", { path: "/" });
+      cookies.remove("nombrerow", { path: "/" });
+      cookies.remove("fotorow", { path: "/" });
+      cookies.remove("email", { path: "/" });
+      cookies.remove("rol", { path: "/" });
+      cookies.remove("primernombre", { path: "/" });
+      cookies.remove("Avatar", { path: "/" });
+      cookies.remove("signin", { path: "/" });
+      cookies.remove("uid", { path: "/" });
+      cookies.remove("rows", { path: "/" });
     }
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isSignedIn: !!user });
